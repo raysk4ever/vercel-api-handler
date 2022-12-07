@@ -9,19 +9,11 @@
     "github",
     "action"
   ],
-  "homepage": "https://github.com/zentered/vercel-preview-url#readme",
-  "bugs": {
-    "url": "https://github.com/zentered/vercel-preview-url/issues"
-  },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zentered/vercel-preview-url.git"
+    "type": "git"
   },
   "license": "MIT",
-  "author": "Zentered <hi@zentered.co> (https://zentered.co)",
-  "contributors": [
-    "Patrick Heneise (https://github.com/zentered)"
-  ],
+  "author": "Ravi Singh",
   "main": "dist/index.js",
   "scripts": {
     "prepare": "husky install",
