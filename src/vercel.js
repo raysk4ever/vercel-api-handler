@@ -31,20 +31,21 @@ export default async function getDeploymentUrl(token, repo, branch, options) {
 
   core.debug(`Found ${data.deployments.length} deployments`)
   core.debug(`Looking for matching deployments ${repo}/${branch}`)
-  const builds = data.deployments.filter((deployment) => {
-    return (
-      deployment.meta.githubCommitRepo === repo &&
-      deployment.meta.githubCommitRef === branch
-    )
-  })
+  // const builds = data.deployments.filter((deployment) => {
+  //   return (
+  //     deployment.meta.githubCommitRepo === repo &&
+  //     deployment.meta.githubCommitRef === branch
+  //   )
+  // })
 
-  core.debug(`Found ${builds.length} matching builds`)
-  if (!builds || builds.length <= 0) {
-    core.error(JSON.stringify(builds, null, 2))
-    throw new Error('no deployments found')
-  }
+  // core.debug(`Found ${builds.length} matching builds`)
+  // if (!builds || builds.length <= 0) {
+  //   core.error(JSON.stringify(builds, null, 2))
+  //   throw new Error('no deployments found')
+  // }
 
-  const build = builds[0]
+  // const build = builds[0]
+  const build = data.deployments[0]
   core.info(`Preview URL: https://${build.url} (${build.state})`)
   return {
     url: build.url,
