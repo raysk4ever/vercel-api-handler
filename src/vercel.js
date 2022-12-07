@@ -12,7 +12,7 @@ export default async function getDeploymentUrl(token, repo, branch, options) {
       query.append(key, options[key])
     }
   })
-
+  core.info(`Token: ${token}`)
   core.info(`Fetching from: ${apiUrl}${deploymentsUrl}?${query.toString()}`)
   const { data } = await axios.get(
     `${apiUrl}${deploymentsUrl}?${query.toString()}`,
