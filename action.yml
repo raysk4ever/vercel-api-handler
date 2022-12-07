@@ -36,7 +36,7 @@ inputs:
   vercel_users:
     description: 'Vercel deployment users'
     required: false
-name: Vercel Preview URL
+name: Fetch Vercel Preview URL
 outputs:
   deployment_state:
     description: 'A string with the current deployment state, it could be one of the following QUEUED, BUILDING, READY, or ERROR.'
