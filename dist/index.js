@@ -10363,23 +10363,23 @@ async function getDeploymentUrl(token, repo, branch, options, tiggerUsername) {
       }
     }
   )
-  console.info('data', data)
-  let [build = { ur: '', state: 'ERROR' }] = data.deployments.filter(d => {
+  console.info(`tigger by = ${tiggerUsername}, branch = ${branch}`)
+  let [build = {}] = data.deployments.filter(d => {
     if (d.creator.username === tiggerUsername && d.meta.githubCommitRef === branch) {
       return true
+    } else {
+      return false
     }
   })
   core.debug(`Found ${data.deployments.length} deployments`)
+  console.info('Depolyment', build)
   core.debug(`Looking for matching deployments ${repo}/${branch}`)
-  // const build = data.deployments[0] ?? { url: '--', state: '--' }
   core.info(`Preview URL: https://${build.url} (${build.state})`)
   return {
     url: build.url,
     state: build.state
   }
 }
-
-// getDeploymentUrl('hOcp46XnQ4bR797FGXDt2Qco', '', 'dev', { teamId: 'team_38kTuZDxkZmIiQceGKk6vJ1G', projectId: 'QmRcLrF2N8RiYEDUBtbmKaMuvhKNqMVqxTyKo9HJ1MQwJt' })
 ;// CONCATENATED MODULE: ./src/index.js
 /* eslint-disable node/no-unsupported-features/es-syntax */
 
