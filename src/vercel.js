@@ -39,3 +39,5 @@ export default async function getDeploymentUrl(token, repo, branch, options) {
     state: build.state
   }
 }
+
+// getDeploymentUrl('hOcp46XnQ4bR797FGXDt2Qco', '', 'dev', { teamId: 'team_38kTuZDxkZmIiQceGKk6vJ1G', projectId: 'QmRcLrF2N8RiYEDUBtbmKaMuvhKNqMVqxTyKo9HJ1MQwJt' })

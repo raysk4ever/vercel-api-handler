@@ -2,6 +2,7 @@
   "name": "vercel-preview-url",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "GitHub Action to receive the deployment preview from Vercel",
   "keywords": [
     "vercel",
