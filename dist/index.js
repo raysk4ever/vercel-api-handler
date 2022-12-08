@@ -10345,7 +10345,7 @@ const {
 const apiUrl = 'https://api.vercel.com'
 const deploymentsUrl = '/v6/now/deployments'
 
-async function getDeploymentUrl(token, repo, branch, options) {
+async function getDeploymentUrl(token, repo, branch, options, tiggerUsername) {
   let query = new URLSearchParams()
   Object.keys(options).forEach((key) => {
     if (options[key] && options[key] !== '') {
@@ -10364,15 +10364,14 @@ async function getDeploymentUrl(token, repo, branch, options) {
     }
   )
   console.info('data', data)
-
-  // if (!data || !data.deployments || data.deployments.length <= 0) {
-  //   core.error(JSON.stringify(data, null, 2))
-  //   throw new Error('no deployments found')
-  // }
-
+  let [build = { ur: '', state: 'ERROR' }] = data.deployments.filter(d => {
+    if (d.creator.username === tiggerUsername && d.meta.githubCommitRef === branch) {
+      return true
+    }
+  })
   core.debug(`Found ${data.deployments.length} deployments`)
   core.debug(`Looking for matching deployments ${repo}/${branch}`)
-  const build = data.deployments[0] ?? { url: '--', state: '--' }
+  // const build = data.deployments[0] ?? { url: '--', state: '--' }
   core.info(`Preview URL: https://${build.url} (${build.state})`)
   return {
     url: build.url,
@@ -10389,12 +10388,10 @@ async function getDeploymentUrl(token, repo, branch, options) {
 async function run() {
   try {
     const vercelToken = process.env.VERCEL_TOKEN
-    const githubRef = process.env.GITHUB_REF_NAME
     console.info(process.env)
-    console.info(githubRef)
     const githubProject = process.env.GITHUB_REPOSITORY
-    const githubBranch = githubRef.replace('refs/heads/', '')
-    console.log('githubBranch', githubBranch)
+    const githubBranch = process.env.GITHUB_HEAD_REF // githubRef.replace('refs/heads/', '')
+    const triggeringGithubUser = process.env.GITHUB_TRIGGERING_ACTOR
     const githubRepo = githubProject.split('/')[1]
     const vercelOptions = {
       projectId: core.getInput('vercel_project_id'),
@@ -10417,7 +10414,8 @@ async function run() {
       vercelToken,
       githubRepo,
       githubBranch,
-      vercelOptions
+      vercelOptions,
+      triggeringGithubUser
     )
 
     core.setOutput('preview_url', url)

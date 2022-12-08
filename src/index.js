@@ -5,12 +5,10 @@ import getDeploymentUrl from './vercel.js'
 async function run() {
   try {
     const vercelToken = process.env.VERCEL_TOKEN
-    const githubRef = process.env.GITHUB_REF_NAME
     console.info(process.env)
-    console.info(githubRef)
     const githubProject = process.env.GITHUB_REPOSITORY
-    const githubBranch = githubRef.replace('refs/heads/', '')
-    console.log('githubBranch', githubBranch)
+    const githubBranch = process.env.GITHUB_HEAD_REF // githubRef.replace('refs/heads/', '')
+    const triggeringGithubUser = process.env.GITHUB_TRIGGERING_ACTOR
     const githubRepo = githubProject.split('/')[1]
     const vercelOptions = {
       projectId: core.getInput('vercel_project_id'),
@@ -33,7 +31,8 @@ async function run() {
       vercelToken,
       githubRepo,
       githubBranch,
-      vercelOptions
+      vercelOptions,
+      triggeringGithubUser
     )
 
     core.setOutput('preview_url', url)

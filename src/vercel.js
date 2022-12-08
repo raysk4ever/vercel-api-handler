@@ -5,7 +5,7 @@ import axios from 'axios'
 const apiUrl = 'https://api.vercel.com'
 const deploymentsUrl = '/v6/now/deployments'
 
-export default async function getDeploymentUrl(token, repo, branch, options) {
+export default async function getDeploymentUrl(token, repo, branch, options, tiggerUsername) {
   let query = new URLSearchParams()
   Object.keys(options).forEach((key) => {
     if (options[key] && options[key] !== '') {
@@ -24,15 +24,14 @@ export default async function getDeploymentUrl(token, repo, branch, options) {
     }
   )
   console.info('data', data)
-
-  // if (!data || !data.deployments || data.deployments.length <= 0) {
-  //   core.error(JSON.stringify(data, null, 2))
-  //   throw new Error('no deployments found')
-  // }
-
+  let [build = { ur: '', state: 'ERROR' }] = data.deployments.filter(d => {
+    if (d.creator.username === tiggerUsername && d.meta.githubCommitRef === branch) {
+      return true
+    }
+  })
   core.debug(`Found ${data.deployments.length} deployments`)
   core.debug(`Looking for matching deployments ${repo}/${branch}`)
-  const build = data.deployments[0] ?? { url: '--', state: '--' }
+  // const build = data.deployments[0] ?? { url: '--', state: '--' }
   core.info(`Preview URL: https://${build.url} (${build.state})`)
   return {
     url: build.url,
