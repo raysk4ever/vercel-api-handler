@@ -23,7 +23,9 @@ async function run() {
       users: core.getInput('vercel_users')
     }
 
-    core.info(`Retrieving deployment preview ...`, vercelOptions)
+    core.info(`Retrieving deployment preview ...`)
+    console.info('vercelToken')
+    console.info(vercelToken)
     const { url, state } = await getDeploymentUrl(
       vercelToken,
       githubRepo,
