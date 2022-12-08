@@ -23,6 +23,7 @@ export default async function getDeploymentUrl(token, repo, branch, options) {
       }
     }
   )
+  console.info('data', data)
 
   if (!data || !data.deployments || data.deployments.length <= 0) {
     core.error(JSON.stringify(data, null, 2))
