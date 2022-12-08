@@ -6,8 +6,11 @@ async function run() {
   try {
     const vercelToken = process.env.VERCEL_TOKEN
     const githubRef = process.env.GITHUB_REF_NAME
+    console.info(process.env)
+    console.info(githubRef)
     const githubProject = process.env.GITHUB_REPOSITORY
     const githubBranch = githubRef.replace('refs/heads/', '')
+    console.log('githubBranch', githubBranch)
     const githubRepo = githubProject.split('/')[1]
     const vercelOptions = {
       projectId: core.getInput('vercel_project_id'),
