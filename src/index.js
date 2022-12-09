@@ -8,8 +8,9 @@ async function run() {
     console.info(process.env)
     const githubProject = process.env.GITHUB_REPOSITORY
     const githubBranch = process.env.GITHUB_HEAD_REF // githubRef.replace('refs/heads/', '')
-    const triggeringGithubUser = process.env.GITHUB_TRIGGERING_ACTOR
+    // const triggeringGithubUser = process.env.GITHUB_TRIGGERING_ACTOR
     const githubRepo = githubProject.split('/')[1]
+    const tokenUsername = core.getInput('github_token_username')
     const vercelOptions = {
       projectId: core.getInput('vercel_project_id'),
       teamId: core.getInput('vercel_team_id'),
@@ -32,7 +33,7 @@ async function run() {
       githubRepo,
       githubBranch,
       vercelOptions,
-      triggeringGithubUser
+      tokenUsername
     )
 
     core.setOutput('preview_url', url)

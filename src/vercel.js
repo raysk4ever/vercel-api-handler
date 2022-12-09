@@ -25,7 +25,7 @@ export default async function getDeploymentUrl(token, repo, branch, options, tig
   )
   console.info(`tigger by = ${tiggerUsername}, branch = ${branch}`)
   let [build = {}] = data.deployments.filter(d => {
-    if (d.creator.username === tiggerUsername && d.meta.githubCommitRef === branch) {
+    if (d.creator.username === tiggerUsername && d.meta.githubCommitRef === 'HEAD') {
       return true
     } else {
       return false

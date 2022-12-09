@@ -3,6 +3,9 @@ branding:
   icon: triangle
 description: 'Receive the deployment preview URL from Vercel'
 inputs:
+  github_token_username:
+    description: 'Github Token Username'
+    required: true
   vercel_project_id:
     description: 'Vercel project id'
     required: false
